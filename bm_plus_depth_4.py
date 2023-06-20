@@ -124,9 +124,9 @@ def memory(x):
 def time_lists(x):
     timeL1=mo_nn(L1(x), x.la, wa1(x))
     
-    timeL2=mo_plus(L2(x), x.lb, wb2(x),p2(x)+wa2(x),p1(x)+wa1(x),k(x)+x.la)
-    timeL3=mo_plus(L3(x), x.lc, wc3(x),p3(x)+wa3(x)+wb3(x),p2(x)+wa2(x)+wb2(x),k(x)+x.la+x.lb)
-    timeL4=mo_plus(L4(x), 1 - k(x) -x.la - x.lb - x.lc, w(x) - x.p - x.wa - x.wb - x.wc,x.p+x.wa+x.wb+x.wc,p3(x)+wa3(x)+wb3(x)+wc3(x),k(x)+x.la+x.lb+x.lc)
+    timeL2=mo_plus(L2(x), x.lb, wb2(x),p2(x),p1(x),k(x))
+    timeL3=mo_plus(L3(x), x.lc, wc3(x),p3(x),p2(x),k(x))
+    timeL4=mo_plus(L4(x), 1 - k(x) -x.la - x.lb - x.lc, w(x) - x.p - x.wa - x.wb - x.wc,x.p,p3(x),k(x))
     
     return timeL1, timeL2, timeL3, timeL4
 
