@@ -3,7 +3,7 @@ from basic_functionalities import *
 
 set_vars = collections.namedtuple('BJMM_MO', 'p d1 d2 d3 l la lb lc')
 num_vars=8
-def bjmm_mo(f) : return wrap(f, set_vars)
+def inject(f) : return wrap(f, set_vars)
 
 k = lambda x : 0.1
 w_=Hi(1-k([0]))
@@ -34,25 +34,25 @@ perms = lambda x: binomH(1., w(x)) - binomH(k(x)+x.l, x.p) - binomH(1-k(x)-x.l, 
 
 constraints = [    
 # original strict constraints
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : r1(x) - x.la)},
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : r2(x) - x.la - x.lb)},
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : r3(x) - x.la - x.lb - x.lc) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : r1(x) - x.la)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : r2(x) - x.la - x.lb)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : r3(x) - x.la - x.lb - x.lc) },
     
 # more flexible constraints (no difference for this algorithm)
-# { 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : x.la-r1(x))}, 
-# { 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : 3*x.la+x.lb-2*r1(x)-r2(x)) }, 
-# { 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : 4*r1(x)+2*r2(x)+r3(x)-(7*x.la+3*x.lb+x.lc)) }, 
+# { 'type' : 'ineq',   'fun' : inject(lambda x : x.la-r1(x))}, 
+# { 'type' : 'ineq',   'fun' : inject(lambda x : 3*x.la+x.lb-2*r1(x)-r2(x)) }, 
+# { 'type' : 'ineq',   'fun' : inject(lambda x : 4*r1(x)+2*r2(x)+r3(x)-(7*x.la+3*x.lb+x.lc)) }, 
     
 
 # correctness 
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : k(x) - x.p - x.d3  )},
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : k(x) - p3(x) - x.d2)},
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : k(x) - p2(x) - x.d1)},
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : k(x) - p1(x)       )},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - x.p - x.d3  )},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p3(x) - x.d2)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p2(x) - x.d1)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p1(x)       )},
     
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : x.l - (x.la+x.lb+x.lc)) }, 
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : (1. - k(x)- x.l) - (w(x) - x.p)) }, 
-{ 'type' : 'ineq',   'fun' : bjmm_mo(lambda x : w(x) - x.p) }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.l - (x.la+x.lb+x.lc)) }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : (1. - k(x)- x.l) - (w(x) - x.p)) }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : w(x) - x.p) }, 
 ]
 
 def memory(x):

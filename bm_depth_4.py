@@ -5,7 +5,7 @@ set_vars = collections.namedtuple('BM', 'p d1 d2 d3 da1 da2 da3 db2 db3 dc3 la l
 
 num_vars=16
 
-def bm(f) : return wrap(f, set_vars)
+def inject(f) : return wrap(f, set_vars)
 
 k = lambda x : 0.1
 w_=Hi(1-k([0]))
@@ -39,40 +39,40 @@ L4 = lambda x: binomH( k(x)    , p3(x)    ) - x.la + binomH(x.la,wa3(x)) - x.lb 
 
 constraints = [
 #representation constraints
-{ 'type' : 'eq',   'fun' : bm(lambda x : r1(x) - c1(x))},
-{ 'type' : 'eq',   'fun' : bm(lambda x : r2(x) - c2(x)) },
-{ 'type' : 'eq',   'fun' : bm(lambda x : r3(x) - c3(x)) },
+{ 'type' : 'eq',   'fun' : inject(lambda x : r1(x) - c1(x))},
+{ 'type' : 'eq',   'fun' : inject(lambda x : r2(x) - c2(x)) },
+{ 'type' : 'eq',   'fun' : inject(lambda x : r3(x) - c3(x)) },
  
 #more flexible representation constraints
-# { 'type' : 'ineq',   'fun' : bm(lambda x : c1(x) - r1(x))},
-# { 'type' : 'ineq',   'fun' : bm(lambda x : c2(x)+ 2 * c1(x)                         -(2*r1(x)+r2(x))) },
-# { 'type' : 'ineq',   'fun' : bm(lambda x : c3(x)+ 2 * c2(x) + 4 * c1(x)             -(4*r1(x)+2*r2(x)+r3(x))) },
-# { 'type' : 'eq'  ,   'fun' : bm(lambda x : c4(x)+ 2 * c3(x) + 4 * c2(x) + 8 * c1(x) -(8*r1(x)+4*r2(x)+2*r3(x)+r4(x)) ) },
+# { 'type' : 'ineq',   'fun' : inject(lambda x : c1(x) - r1(x))},
+# { 'type' : 'ineq',   'fun' : inject(lambda x : c2(x)+ 2 * c1(x)                         -(2*r1(x)+r2(x))) },
+# { 'type' : 'ineq',   'fun' : inject(lambda x : c3(x)+ 2 * c2(x) + 4 * c1(x)             -(4*r1(x)+2*r2(x)+r3(x))) },
+# { 'type' : 'eq'  ,   'fun' : inject(lambda x : c4(x)+ 2 * c3(x) + 4 * c2(x) + 8 * c1(x) -(8*r1(x)+4*r2(x)+2*r3(x)+r4(x)) ) },
     
 #correctness
-{ 'type' : 'ineq',   'fun' : bm(lambda x : (1 - k(x) - x.la              ) - (w(x) - x.p - x.wa              ))},
-{ 'type' : 'ineq',   'fun' : bm(lambda x : (1 - k(x) - x.la - x.lb       ) - (w(x) - x.p - x.wa - x.wb       ))}, 
-{ 'type' : 'ineq',   'fun' : bm(lambda x : (1 - k(x) - x.la - x.lb - x.lc) - (w(x) - x.p - x.wa - x.wb - x.wc))}, 
-{ 'type' : 'ineq',   'fun' : bm(lambda x :  1 - k(x) - x.la - x.lb - x.lc                                  )}, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : (1 - k(x) - x.la              ) - (w(x) - x.p - x.wa              ))},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : (1 - k(x) - x.la - x.lb       ) - (w(x) - x.p - x.wa - x.wb       ))}, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : (1 - k(x) - x.la - x.lb - x.lc) - (w(x) - x.p - x.wa - x.wb - x.wc))}, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x :  1 - k(x) - x.la - x.lb - x.lc                                  )}, 
     
-{ 'type' : 'ineq',   'fun' : bm(lambda x : w(x) - x.p - x.wa - x.wb - x.wc) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : w(x) - x.p - x.wa - x.wb - x.wc) },
 
-{ 'type' : 'ineq',   'fun' : bm(lambda x : k(x) - x.p - x.d3  )},
-{ 'type' : 'ineq',   'fun' : bm(lambda x : k(x) - p3(x) - x.d2)},
-{ 'type' : 'ineq',   'fun' : bm(lambda x : k(x) - p2(x) - x.d1)},
-{ 'type' : 'ineq',   'fun' : bm(lambda x : k(x) - p1(x)       )},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - x.p - x.d3  )},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p3(x) - x.d2)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p2(x) - x.d1)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p1(x)       )},
     
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.la - x.wa   - x.da3) },    
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.la - wa3(x) - x.da2) },
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.la - wa2(x) - x.da1) },
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.la - wa1(x)        ) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - x.wa   - x.da3) },    
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - wa3(x) - x.da2) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - wa2(x) - x.da1) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - wa1(x)        ) },
     
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.lb - x.wb   - x.db3) },    
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.lb - wb3(x) - x.db2) },
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.lb - wb2(x))         },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.lb - x.wb   - x.db3) },    
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.lb - wb3(x) - x.db2) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.lb - wb2(x))         },
     
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.lc - x.wc   - x.dc3) }, 
-{ 'type' : 'ineq',   'fun' : bm(lambda x : x.lc - wc3(x))         },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.lc - x.wc   - x.dc3) }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.lc - wc3(x))         },
 ]
 
 

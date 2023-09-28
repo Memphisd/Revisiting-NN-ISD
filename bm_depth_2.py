@@ -4,7 +4,7 @@ from basic_functionalities import *
 set_vars = collections.namedtuple('BM2', 'p d1 da1 la wa')
 num_vars=5
 
-def bm2(f) : return wrap(f, set_vars)
+def inject(f) : return wrap(f, set_vars)
 
 k = lambda x : 0.1
 w_=Hi(1-k([0]))
@@ -22,19 +22,19 @@ L2 = lambda x: binomH( k(x)    , p1(x)    ) - x.la + binomH(x.la,wa1(x))
 
 constraints =[
 #representation constraints
-{ 'type' : 'eq',   'fun' : bm2(lambda x : r1(x) - c1(x))},
+{ 'type' : 'eq',   'fun' : inject(lambda x : r1(x) - c1(x))},
 
 #correctness
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : (1 - k(x) - x.la) - (w - x.p - x.wa)) }, 
-{ 'type' : 'ineq',   'fun' : bm2(lambda x :  1 - k(x)  -x.la)                     }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x : (1 - k(x) - x.la) - (w - x.p - x.wa)) }, 
+{ 'type' : 'ineq',   'fun' : inject(lambda x :  1 - k(x)  -x.la)                     }, 
     
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : w(x) - x.p - x.wa) },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : w(x) - x.p - x.wa) },
     
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : x.la - x.wa   - x.da1) },    
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : x.la - wa1(x))         },
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - x.wa   - x.da1) },    
+{ 'type' : 'ineq',   'fun' : inject(lambda x : x.la - wa1(x))         },
     
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : k(x) - x.p  - x.d1)},
-{ 'type' : 'ineq',   'fun' : bm2(lambda x : k(x) - p1(x)      )}
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - x.p  - x.d1)},
+{ 'type' : 'ineq',   'fun' : inject(lambda x : k(x) - p1(x)      )}
 ]
 
 def memory(x):
